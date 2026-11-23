@@ -1,5 +1,5 @@
 // localStorage persistence with graceful failure (private mode, quota...).
-const PREFIX = 'cuelike.';
+const PREFIX = 'rackruin.';
 
 export const storage = {
   load(key, fallback = null) {

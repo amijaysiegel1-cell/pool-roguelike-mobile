@@ -61,6 +61,8 @@ export class App {
   show(name, params = {}, { record = true } = {}) {
     const S = SCREENS[name];
     if (!S) throw new Error('No screen ' + name);
+    // leaving the tutorial restores the real saved run (if any)
+    if (this.run?.mode === 'tutorial' && name !== 'match') this.run = storage.load('run');
     this.screen?.destroy();
     this.screen = new S(this, params);
     document.body.dataset.act = this.run && ['map', 'match', 'reward', 'shop', 'event', 'rest', 'treasure', 'act'].includes(name) ? this.run.act : '1';
@@ -208,6 +210,15 @@ export class App {
     this.show('match', { enc, ...extra });
   }
 
+  /** Dev helper: jump straight into a boss fight (console: __app.debugBoss('shark')). */
+  debugBoss(id, act = null) {
+    if (!this.run) this.newRun({ char: 'rookie', seed: 'DEBUG' });
+    const run = this.run;
+    run.map.boss = id;
+    if (act) run.act = act;
+    this.startFight(encounterFor(run, { id: 'debug-' + id, floor: 8 }, 'boss'));
+  }
+
   startSpecialFight(kind) {
     const run = this.run;
     const node = run.map.nodes.find((n) => n.id === run.pos) || { id: 'x', floor: 3 };
@@ -307,6 +318,27 @@ export class App {
     const snapshot = JSON.parse(JSON.stringify(run));
     this.clearRun();
     this.show('victory', { run: snapshot, summary, ending }, { record: false });
+  }
+
+  async pauseMatch(fight) {
+    const tut = this.run?.mode === 'tutorial';
+    const trick = !!fight?.scenario && !tut;
+    const buttons = [{ label: 'Resume', value: 'resume', cls: 'primary' }];
+    if (tut) buttons.push({ label: '🚪 Exit tutorial', value: 'exit' });
+    else if (!trick) {
+      buttons.push({ label: '🎒 Your kit', value: 'inv' });
+      buttons.push({ label: '🏠 Save & quit to title', value: 'title' });
+      buttons.push({ label: '🏳️ Abandon run', value: 'abandon', cls: 'danger' });
+    }
+    const v = await this.modal({ title: '⏸ Paused', html: tut ? '<p class="muted">You can replay the tutorial any time from the title screen.</p>' : `<p class="muted">Seed <b>${esc(this.run.seed)}</b>. Fights save at the start of every turn.</p>`, buttons });
+    if (v === 'exit') this.show('title');
+    if (v === 'inv') this.showInventory();
+    if (v === 'title') {
+      if (fight && fight.state === 'aim' && !fight.result) this.run.fight = fight.serialize();
+      this.saveRun();
+      this.show('title');
+    }
+    if (v === 'abandon') this.abandonRun();
   }
 
   async abandonRun() {

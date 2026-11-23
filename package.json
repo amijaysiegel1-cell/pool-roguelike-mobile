@@ -1,1 +1,12 @@
-{"type":"module"}
+{
+  "name": "rack-and-ruin",
+  "version": "0.1.0",
+  "private": true,
+  "description": "An 8-ball pool roguelike for mobile browsers.",
+  "type": "module",
+  "scripts": {
+    "serve": "python3 -m http.server 8000",
+    "build": "node tools/build.mjs",
+    "test": "node tests/physics.test.mjs && node tests/fight.test.mjs 4 && node tests/run.test.mjs 3"
+  }
+}

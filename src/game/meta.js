@@ -117,10 +117,10 @@ export function addLeaderboard(profile, entry) {
   profile.leaderboard = profile.leaderboard.slice(0, 50);
 }
 
-// Optional global leaderboard hook. Set window.CUELIKE_LEADERBOARD_URL to an
+// Optional global leaderboard hook. Set window.RACKRUIN_LEADERBOARD_URL to an
 // endpoint accepting POST {name, score, seed, mode, char, date} to enable.
 export async function submitGlobalScore(entry) {
-  const url = globalThis.CUELIKE_LEADERBOARD_URL;
+  const url = globalThis.RACKRUIN_LEADERBOARD_URL;
   if (!url) return { ok: false, reason: 'No global leaderboard configured' };
   try {
     const r = await fetch(url, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(entry) });

@@ -1,0 +1,17 @@
+{
+  "name": "Rack & Ruin",
+  "short_name": "Rack&Ruin",
+  "description": "An 8-ball pool roguelike: real billiards physics, branching maps, wild powerups and boss fights.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "fullscreen",
+  "orientation": "portrait",
+  "background_color": "#120a05",
+  "theme_color": "#120a05",
+  "icons": [
+    { "src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "assets/icon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}

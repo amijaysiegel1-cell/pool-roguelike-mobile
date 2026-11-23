@@ -54,7 +54,7 @@ export class MatchScreen extends Screen {
           <div class="info"><div class="nm">YOU <span class="ball-dot" style="background:${BALL_COLORS[1]}"></span> <span class="p-left"></span></div>
           <div class="p-hp">${hpBar(this.app.run.hp, this.app.run.maxHp)}</div><div class="st p-st"></div></div>
         </div>
-        <div class="vs">VS<span class="coins hud-coins"></span></div>
+        <div class="vs"><button class="icon-btn" data-act="pause" aria-label="Pause" style="width:30px;height:30px;font-size:14px">⏸</button>VS<span class="coins hud-coins"></span></div>
         <div class="enemies col" style="flex:1;gap:4px;min-width:0"></div>
       </div>
       <div class="table-area">
@@ -453,6 +453,7 @@ export class MatchScreen extends Screen {
     if (k === 'sheet') { if (v === 'go') this.doSheet(); else this.closeSheet(); return; }
     if (k === 'target') { f.setTarget(+v); return; }
     if (k === 'inv') { if (!f.scenario && this.app.run.mode !== 'tutorial') this.app.showInventory(); }
+    if (k === 'pause') this.app.pauseMatch(f);
   }
 
   doSheet() {

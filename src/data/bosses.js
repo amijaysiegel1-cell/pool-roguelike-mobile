@@ -55,15 +55,15 @@ export const BOSSES = [
       hurt: ['Grr.', 'Okay, okay.'],
     },
     phaseLine: 'Alright. Fun\'s over. Let me show you how I REALLY play.',
-    enemies: [{ name: 'The Shark', icon: '🦈', skill: 0.8, banks: false }],
+    enemies: [{ name: 'The Shark', icon: '🦈', skill: 0.72, banks: false }],
     phases: [{
       at: 0.5, name: 'TRUE COLORS',
-      enter: (f, e) => { e.skill = 0.93; e.banks = true; e.trickBias = 70; e.dmgMult = 1.4; e.hustle = 4; e.taunts = 'phase2Sink'; },
+      enter: (f, e) => { e.skill = 0.86; e.banks = true; e.trickBias = 70; e.dmgMult = 1.3; e.hustle = 4; e.taunts = 'phase2Sink'; },
     }],
     relic: 'sharks_tooth',
   },
   {
-    id: 'mona', name: 'Magnetic Mona', icon: '🧲', title: 'Queen of the Neon Floor', acts: [2], color: '#ff2bd6',
+    id: 'mona', name: 'Magnetic Mona', icon: '🧲', title: 'Queen of the Neon Floor', acts: [2, 3], color: '#ff2bd6',
     intro: [
       'Darling, everything in this casino is attracted to me.',
       'Especially the balls. And your cue ball, eventually.',
@@ -75,11 +75,11 @@ export const BOSSES = [
       hurt: ['How dare you.', 'You\'ll pay for that.'],
     },
     phaseLine: 'Enough charm. POLARITY... FLIP!',
-    enemies: [{ name: 'Magnetic Mona', icon: '👩‍🎤', skill: 0.66 }],
+    enemies: [{ name: 'Magnetic Mona', icon: '👩‍🎤', skill: 0.6 }],
     setup: (f) => { monaMagnets(f, 650); },
     phases: [{
       at: 0.5, name: 'POLARITY FLIP',
-      enter: (f, e) => { e.magnetStrength = 950; e.skill += 0.06; monaMagnets(f, 950); },
+      enter: (f, e) => { e.magnetStrength = 900; e.skill += 0.05; monaMagnets(f, 900); },
     }],
     onTurnStart: (f, who) => {
       const e = f.enemies[0];
@@ -93,7 +93,7 @@ export const BOSSES = [
     relic: 'lodestone',
   },
   {
-    id: 'twins', name: 'The Twin Cues', icon: '👯', title: 'Two Sticks, One Mind', acts: [1, 2, 3], color: '#ffd54f',
+    id: 'twins', name: 'The Twin Cues', icon: '👯', title: 'Two Sticks, One Mind', acts: [1, 2], color: '#ffd54f',
     intro: [
       'LEFTY: We finish each other\'s—',
       'RIGHTY: —shots. And we take turns beating you.',
@@ -106,14 +106,14 @@ export const BOSSES = [
     },
     phaseLine: 'You... you hurt my twin. Now I\'m ANGRY.',
     enemies: [
-      { name: 'Lefty', icon: '👈', skill: 0.58, banks: true, hpShare: 0.5, dmgMult: 1.2 },
-      { name: 'Righty', icon: '👉', skill: 0.74, hpShare: 0.5 },
+      { name: 'Lefty', icon: '👈', skill: 0.52, banks: true, hpShare: 0.5, dmgMult: 1.15 },
+      { name: 'Righty', icon: '👉', skill: 0.64, hpShare: 0.5 },
     ],
     onEnemyDown: (f, e) => {
       const other = f.enemies.find((x) => x !== e && x.hp > 0);
       if (!other) return;
-      other.dmgMult = (other.dmgMult || 1) * 1.5;
-      other.skill = Math.min(0.95, other.skill + 0.12);
+      other.dmgMult = (other.dmgMult || 1) * 1.35;
+      other.skill = Math.min(0.9, other.skill + 0.08);
       other.enraged = true;
       f.say(other, 'You... you hurt my twin. Now I\'m ANGRY.');
       f.banner('ENRAGED!', '#ff5252');
@@ -172,7 +172,7 @@ export const BOSSES = [
       hurt: ['...INTERESTING.', 'A FLICKER.'],
     },
     phaseLine: 'NOW SEE THE SINGULARITY.',
-    enemies: [{ name: 'The Cosmic 8', icon: '🎱', skill: 0.76, banks: true }],
+    enemies: [{ name: 'The Cosmic 8', icon: '🎱', skill: 0.68, banks: true }],
     setup: (f) => {
       f.rollMul = 0.45;
       for (const p of f.tableSpec.pockets) p.attract = { k: 380, radius: 115 };

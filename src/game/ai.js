@@ -9,7 +9,7 @@ import { groupOf, remaining } from './rules.js';
 const DEG = Math.PI / 180;
 
 export function aimNoiseDeg(skill) {
-  return 0.12 + 3.4 * Math.pow(1 - Math.max(0, Math.min(1, skill)), 1.5);
+  return 0.15 + 4.2 * Math.pow(1 - Math.max(0, Math.min(1, skill)), 1.4);
 }
 
 function now() { return (globalThis.performance || Date).now(); }

@@ -104,7 +104,7 @@ export class Fight {
     if (this.enc.kind === 'elite') dmg += BALANCE.ELITE_DMG_BONUS;
     dmg += st.enemyDmg + (e.dmgBonus || 0);
     const traits = e.traits || [];
-    let skill = (e.skill ?? 0.4) + st.enemySkill + (traits.includes('precise') ? 0.15 : 0);
+    let skill = (e.skill ?? 0.4) + st.enemySkill + (traits.includes('precise') ? 0.08 : 0);
     return {
       idx, id: e.id, name: e.name, icon: e.icon, hp: maxHp, maxHp, dmg, skill: Math.min(0.97, skill),
       banks: !!e.banks || traits.includes('trickster'), trickBias: traits.includes('trickster') ? 50 : (e.trickBias || 0),
@@ -358,8 +358,8 @@ export class Fight {
         if (this.result) return;
       }
       if (e.traits.includes('regen') && e.hp < e.maxHp) {
-        e.hp = Math.min(e.maxHp, e.hp + 3);
-        this.emit('enemyHeal', e, 3);
+        e.hp = Math.min(e.maxHp, e.hp + 2);
+        this.emit('enemyHeal', e, 2);
       }
       if (e.status.frozen > 0) {
         e.status.frozen--;
@@ -987,7 +987,7 @@ export class Fight {
       this.hurtEnemy(e, BALANCE.MISS_DMG[act], null, null, ['MISS']);
     }
     if (res.rack === 'win') {
-      this.hurtPlayer(16 + act * 3, 'THEIR 8');
+      this.hurtPlayer(12 + act * 2, 'THEIR 8');
       if (this.stats.suddenDeath) this.hurtPlayer(99, 'THEIR 8');
       this.banner(`🎱 ${e.name} WINS THE RACK`, '#ff8a65');
       this.rackLoser = 'player';

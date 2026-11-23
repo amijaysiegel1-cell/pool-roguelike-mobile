@@ -40,14 +40,14 @@ export const BALANCE = {
   BALL_DMG: 8,           // player base damage per ball sunk
   FINISHER_DMG: 24,      // legally sinking the 8
   EIGHT_PENALTY: 15,     // sinking the 8 illegally
-  FOUL_DMG: [0, 5, 6, 7, 8],
+  FOUL_DMG: [0, 4, 5, 5, 6],
   MISS_DMG: [0, 1, 2, 2, 3],
-  ENEMY_DMG: [0, 4, 5, 6, 7],
+  ENEMY_DMG: [0, 3, 4, 4, 5],
   ELITE_DMG_BONUS: 2,
-  ENEMY_HP: [0, [28, 36], [40, 50], [52, 64], [66, 80]],
-  ELITE_HP_MULT: 1.45,
-  BOSS_HP: [0, 80, 110, 145, 190],
-  BOSS_DMG: [0, 6, 7, 8, 9],
+  ENEMY_HP: [0, [26, 34], [34, 42], [42, 52], [50, 62]],
+  ELITE_HP_MULT: 1.35,
+  BOSS_HP: [0, 70, 90, 115, 150],
+  BOSS_DMG: [0, 4, 5, 5, 6],
   MULTI_BONUS: 0.5,      // each extra ball in one shot adds +50%
   BANK_MULT: 1.5,
   BANK2_MULT: 2,
