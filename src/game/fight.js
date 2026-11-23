@@ -75,7 +75,7 @@ export class Fight {
     this.charges = {};
     for (const inst of run.items) {
       const def = ITEM_MAP[inst.id];
-      if (def?.type === 'cue' && def.charges) this.charges[def.id] = def.charges * (inst.n || 1) + this.stats.charges;
+      if (def?.type === 'cue' && def.charges) this.charges[def.id] = def.charges * (inst.n || 1) + (inst.extra || 0) + this.stats.charges;
     }
     if (this.boss?.setup) this.boss.setup(this);
     this.sim.rollMul = this.rollMul;
@@ -632,7 +632,6 @@ export class Fight {
         const ball = a, pocket = b;
         if (pocket.owner === 'player' && ball.group !== 'solid') { this.queue.push({ t: 'respot', id: ball.id }); break; }
         this.emit('pocket', ball, pocket);
-        if (ball.group === shot?.who && false) break;
         if (ball.mods.cluster) this.queue.push({ t: 'explode', x: ball.x, y: ball.y, radius: 170, power: 900, depth: 1 });
         if (shot?.who === 'player' && ball.group === 'solid') {
           this.sinksThisShot++;
@@ -1042,7 +1041,7 @@ export class Fight {
     let ok = false;
     const potted = res.own.length > 0 && !res.cueScratch;
     if (goal === 'pot') ok = potted;
-    else if (goal === 'draw') ok = potted && this.sim.cue.y > (sc.drawLine ?? 0);
+    else if (goal === 'draw') ok = potted && (sc.drawX ? this.sim.cue.x > sc.drawX : this.sim.cue.y > (sc.drawLine ?? 0));
     else if (goal === 'explode') ok = potted && this.shot.flags.explode;
     else if (goal === 'target') ok = res.pocketed.some((p) => p.ball.num === sc.target) && !res.cueScratch;
     this.emit('scenarioShot', ok, res);

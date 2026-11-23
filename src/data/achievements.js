@@ -1,0 +1,28 @@
+// Achievements. Each is checked against a context on specific triggers:
+//   fightWon {run, fight}, runEnd {run, won}, profile {profile}
+export const ACHIEVEMENTS = [
+  { id: 'graduate', name: 'Graduate', icon: '🎓', desc: 'Finish the tutorial.', on: 'profile', test: ({ profile }) => profile.flags.tutorialDone },
+  { id: 'first_win', name: 'First Blood', icon: '🩸', desc: 'Win your first fight.', on: 'fightWon', test: () => true },
+  { id: 'flawless', name: 'Flawless', icon: '💎', desc: 'Win a fight without taking damage.', on: 'fightWon', test: ({ fight }) => !fight.flags.tookDamage },
+  { id: 'bank_robber', name: 'Bank Robber', icon: '🏦', desc: 'Sink a ball with a 2-rail bank.', on: 'fightWon', test: ({ run }) => (run.stats.doubleBanks || 0) > 0 },
+  { id: 'triple', name: 'Triple Threat', icon: '🎯', desc: 'Sink 3+ balls in one shot.', on: 'fightWon', test: ({ run }) => (run.stats.bestMulti || 0) >= 3 },
+  { id: 'chain', name: 'Chain Reaction', icon: '💥', desc: 'Split a Split Ball with an explosion.', on: 'fightWon', test: ({ run }) => (run.stats.chainReactions || 0) > 0 },
+  { id: 'one_hp', name: 'By a Thread', icon: '🧵', desc: 'Win a fight with exactly 1 HP.', on: 'fightWon', test: ({ run }) => run.hp === 1 && !run.challenge },
+  { id: 'scratch_master', name: 'Scratch Master', icon: '🙈', desc: 'Scratch 3 times in one fight... and still win.', on: 'fightWon', test: ({ fight }) => (fight.flags.scratches || 0) >= 3 },
+  { id: 'shark_bait', name: 'Shark Bait', icon: '🦈', desc: 'Defeat The Shark.', on: 'boss', test: ({ boss }) => boss === 'shark' },
+  { id: 'demagnetized', name: 'Demagnetized', icon: '🧲', desc: 'Defeat Magnetic Mona.', on: 'boss', test: ({ boss }) => boss === 'mona' },
+  { id: 'double_trouble', name: 'Double Trouble', icon: '👯', desc: 'Defeat the Twin Cues.', on: 'boss', test: ({ boss }) => boss === 'twins' },
+  { id: 'table_turner', name: 'Table Turner', icon: '👁️', desc: 'Defeat The Table Itself.', on: 'boss', test: ({ boss }) => boss === 'living_table' },
+  { id: 'cosmic', name: 'Cosmic Champion', icon: '🌌', desc: 'Defeat The Cosmic 8 and win a run.', on: 'runEnd', test: ({ won }) => won },
+  { id: 'high_roller', name: 'High Roller', icon: '💰', desc: 'Hold 300 coins at once.', on: 'fightWon', test: ({ run }) => run.coins >= 300 },
+  { id: 'cursed', name: 'Cursed & Proud', icon: '😈', desc: 'Hold 3 curses at once.', on: 'fightWon', test: ({ run }) => run.items.filter((i) => i.id && ['glass_cannon', 'blood_chalk', 'greedy_pockets', 'shaky_hands', 'devils_deal', 'jinxed_eight', 'no_mercy', 'cursed_coin'].includes(i.id)).length >= 3 },
+  { id: 'raccoon', name: 'Raccoon Tamer', icon: '🦝', desc: 'Beat Bandit in his side game.', on: 'profile', test: ({ profile }) => profile.npc.raccoon.beaten >= 1 },
+  { id: 'oracle', name: 'True Believer', icon: '🔮', desc: 'Consult the Oracle 5 times.', on: 'profile', test: ({ profile }) => profile.npc.oracle.asks >= 5 },
+  { id: 'rival', name: 'Rivalry Settled', icon: '😎', desc: 'Beat Dash Darnell 3 times.', on: 'profile', test: ({ profile }) => profile.npc.rival.wins >= 3 },
+  { id: 'ascended', name: 'Ascended', icon: '⬆️', desc: 'Win a run on Ascension 1 or higher.', on: 'runEnd', test: ({ won, run }) => won && run.ascension >= 1 },
+  { id: 'daily', name: 'Daily Grinder', icon: '📅', desc: 'Finish a daily run.', on: 'runEnd', test: ({ run }) => run.mode === 'daily' },
+  { id: 'eight_within', name: 'The 8 Within', icon: '🎱', desc: '???', secret: true, on: 'profile', test: ({ profile }) => !!profile.seen.endings.eight_within },
+  { id: 'collector', name: 'Collector', icon: '📚', desc: 'Discover 40 different powerups.', on: 'profile', test: ({ profile }) => Object.keys(profile.seen.items).length >= 40 },
+  { id: 'all_chars', name: 'Full Roster', icon: '👥', desc: 'Unlock every character.', on: 'profile', test: ({ profile }) => profile.unlocked.chars.length >= 6 },
+  { id: 'sudden', name: 'Untouchable', icon: '☠️', desc: 'Beat an Act 1 boss in Sudden Death.', on: 'boss', test: ({ run }) => run.challenge === 'sudden_death' },
+];
