@@ -58,7 +58,20 @@ html = html
   .replace(/<link rel="stylesheet" href="css\/style.css">/, () => `<style>\n${css}\n</style>`)
   .replace(/<script type="module" src="src\/main.js"><\/script>/, () => `<script type="module">\n${js.replace(/<\/script/gi, '<\\/script')}\n</script>`);
 
-fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
-const out = path.join(root, 'dist/rack-and-ruin.html');
-fs.writeFileSync(out, html);
-console.log(`built ${path.relative(root, out)} — ${order.length} modules, ${(html.length / 1024).toFixed(0)} KB`);
+// --artifact <file>: emit a body-only page for hosts that supply their own
+// <!doctype>/<head>/<body> skeleton (title + styles + app root + script).
+const ai = process.argv.indexOf('--artifact');
+if (ai > 0) {
+  const outA = path.resolve(process.argv[ai + 1] || path.join(root, 'dist/artifact.html'));
+  const body = html.match(/<body>([\s\S]*)<\/body>/)[1].replace(/\s*<noscript>[\s\S]*?<\/noscript>/, '');
+  const style = html.match(/<style>[\s\S]*?<\/style>/)[0].replace(':root {', ':root {\n  color-scheme: dark;');
+  const page = `<title>Rack &amp; Ruin</title>\n${style}\n${body.trim()}\n`;
+  fs.mkdirSync(path.dirname(outA), { recursive: true });
+  fs.writeFileSync(outA, page);
+  console.log(`built ${outA} — ${(page.length / 1024).toFixed(0)} KB`);
+} else {
+  fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
+  const out = path.join(root, 'dist/rack-and-ruin.html');
+  fs.writeFileSync(out, html);
+  console.log(`built ${path.relative(root, out)} — ${order.length} modules, ${(html.length / 1024).toFixed(0)} KB`);
+}
