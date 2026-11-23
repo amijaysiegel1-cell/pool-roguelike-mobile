@@ -373,7 +373,7 @@ export class MatchScreen extends Screen {
     let txt = '', cls = '';
     if (f.state === 'aim') {
       cls = 'you';
-      txt = f.ballInHand ? (f.ballInHand === 'kitchen' ? 'YOUR BREAK · drag ✋ the cue ball behind the line' : 'BALL IN HAND · drag the cue ball') : f.isBreak ? 'YOUR BREAK' : 'YOUR SHOT';
+      txt = f.ballInHand ? (f.ballInHand === 'kitchen' ? 'YOUR BREAK · drag ✋ the cue ball, then pull POWER' : 'BALL IN HAND · drag the cue ball, then pull POWER') : f.isBreak ? 'YOUR BREAK' : 'YOUR SHOT';
     } else if (f.state === 'think' || f.state === 'enemyAim') {
       cls = 'them';
       txt = `${f.activeEnemy?.name || 'Opponent'} is ${f.state === 'think' ? 'thinking…' : 'aiming…'}`;

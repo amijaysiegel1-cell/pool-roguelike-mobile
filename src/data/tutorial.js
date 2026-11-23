@@ -18,9 +18,9 @@ export const TUTORIAL = [
     coach: [
       'Good. Now, position is everything. Spin controls where the cue ball goes AFTER contact.',
       'Drag the dot on the small cue ball (bottom-left) DOWN for backspin — "draw". Up is follow, sideways is english.',
-      'Sink the 2-ball in the side pocket AND make the cue ball roll back toward you.',
+      'Sink the 2-ball in the corner AND make the cue ball roll back toward you.',
     ],
-    scenario: { goal: 'draw', drawX: 205, balls: [{ num: 2, x: 75, y: H / 2 }], cue: { x: 255, y: H / 2 } },
+    scenario: { goal: 'draw', drawLine: 230, balls: [{ num: 2, x: 420, y: 140 }], cue: { x: 320, y: 314 } },
   },
   {
     id: 'power', title: 'Lesson 3 — Powerups',
